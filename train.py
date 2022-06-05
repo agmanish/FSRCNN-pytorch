@@ -9,7 +9,7 @@ import torch.backends.cudnn as cudnn
 from torch.utils.data.dataloader import DataLoader
 from tqdm import tqdm
 
-from models import SRCNN
+from models import FSRCNN
 from datasets import TrainDataset, EvalDataset
 from utils import AverageMeter, calc_psnr, calc_ssim
 import json
