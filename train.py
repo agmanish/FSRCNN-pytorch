@@ -1,7 +1,7 @@
 import argparse
 import os
 import copy
-
+import time
 import torch
 from torch import nn
 import torch.optim as optim
@@ -16,6 +16,7 @@ import json
 
 
 if __name__ == '__main__':
+    start = time.time()
     parser = argparse.ArgumentParser()
     parser.add_argument('--train-file', type=str, required=True)
     parser.add_argument('--eval-file', type=str, required=True)
@@ -124,6 +125,8 @@ if __name__ == '__main__':
 
     print('best epoch: {}, psnr: {:.2f}'.format(best_epoch, best_psnr))
     torch.save(best_weights, os.path.join(args.outputs_dir, 'best.pth'))
+    end = time.time()
+    timexec=end-start
     train_metrics={
         "scale":args.scale,
         "learning_rate":args.lr,
@@ -136,7 +139,8 @@ if __name__ == '__main__':
         "ssim_vs_epoch":ssim_dict,
         "best_epoch":best_epoch,
         "best_psnr":best_psnr,
-        "best_ssim":best_ssim
+        "best_ssim":best_ssim,
+        "execution_time":timexec
     }
     json_path=args.opm_dir+"/train_metrics.json"
     with open(json_path, "w") as outfile:
